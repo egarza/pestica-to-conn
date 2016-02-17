@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# This script only works if PESTICA has already been run.
+
 root=/media/INP_MRI_Backup/projects/INP/conectome_inp/analysis/rsfmri
 
 
@@ -9,11 +11,11 @@ do
 
 cd $root/preproc/$subject/${subject}_fmri_mc_pestica
 
-echo "cd $root/preproc/$subject/$subject_fmri_mc_pestica"
-
 echo "CONVERTING SUBJECT $subject"
 
 echo `pwd`
+
+#Volume is the number of slices in a volume. The number of volumes is 300.
 
 matlab $MATLABLINE <<< "card_pestica=dlmread('card_pestica.dat'); volume = 36; card_pestica_vol = arrayfun(@(i) max(card_pestica(i:i+volume-1)),1:volume:length(card_pestica)-volume+1); card_pestica_vol = reshape(card_pestica_vol,[300,1]); save('card_pestica_vol.mat'); dlmwrite('card_pestica_vol.txt',card_pestica_vol);resp_pestica=dlmread('resp_pestica.dat'); volume = 36; resp_pestica_vol = arrayfun(@(i) max(resp_pestica(i:i+volume-1)),1:volume:length(resp_pestica)-volume+1); resp_pestica_vol = reshape(resp_pestica_vol,[300,1]); save('resp_pestica_vol.mat'); dlmwrite('resp_pestica_vol.txt',resp_pestica_vol);exit;"
 
